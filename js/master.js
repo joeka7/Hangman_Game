@@ -1,12 +1,72 @@
+let container = document.createElement("div");
+container.className = "container";
+document.body.appendChild(container);
+let gameInfo = document.createElement("div");
+gameInfo.className = "game-info";
+container.appendChild(gameInfo);
+let gameName = document.createElement("div");
+gameName.className = "game-name";
+gameName.innerHTML = "Hangman Game";
+gameInfo.appendChild(gameName);
+let category = document.createElement("div");
+category.className = "category";
+category.innerHTML = "Word From: ";
+gameInfo.appendChild(category);
+let span = document.createElement("span");
+category.appendChild(span);
+let hr1 = document.createElement("hr");
+container.appendChild(hr1);
+let row = document.createElement("div");
+row.className = "row";
+container.appendChild(row);
+let hangmanDrawHtml = document.createElement("div");
+hangmanDrawHtml.className = "hangman-draw";
+row.appendChild(hangmanDrawHtml);
+let theDraw = document.createElement("div");
+theDraw.className = "the-draw";
+hangmanDrawHtml.appendChild(theDraw);
+let theStand = document.createElement("div");
+theStand.className = "the-stand";
+theDraw.appendChild(theStand);
+let theHang = document.createElement("div");
+theHang.className = "the-hang";
+theDraw.appendChild(theHang);
+let theRope = document.createElement("div");
+theRope.className = "the-rope";
+theDraw.appendChild(theRope);
+let theMan = document.createElement("div");
+theMan.className = "the-man";
+theDraw.appendChild(theMan);
+let head = document.createElement("div");
+head.className = "head";
+theMan.appendChild(head);
+let body = document.createElement("div");
+body.className = "body";
+theMan.appendChild(body);
+let hands = document.createElement("div");
+hands.className = "hands";
+theMan.appendChild(hands);
+let legs = document.createElement("div");
+legs.className = "legs";
+theMan.appendChild(legs);
+let lettersHtml = document.createElement("div");
+lettersHtml.className = "letters";
+row.appendChild(lettersHtml);
+let hr2 = document.createElement("hr");
+container.appendChild(hr2);
+let lettersGuess = document.createElement("div");
+lettersGuess.className = "letters-guess";
+container.appendChild(lettersGuess);
+
 const letters = "abcdefghijklmnopqrstuvwxyz";
 let lettersArray = Array.from(letters);
 let lettersContainer = document.querySelector(".letters");
 
 lettersArray.forEach(letter => {
     let span = document.createElement("span");
-    let theLetter = document.createTextNode(letter);
-    span.appendChild(theLetter);
+    let letterText = document.createTextNode(letter);
     span.className = "letter-box";
+    span.appendChild(letterText);
     lettersContainer.appendChild(span);
 });
 
@@ -22,77 +82,54 @@ const words = {
 let allKeys = Object.keys(words);
 let randomPropNumber = Math.floor(Math.random() * allKeys.length);
 let randomPropName = allKeys[randomPropNumber];
-let randomPropValue = words[randomPropName];
-let randomValueNumber = Math.floor(Math.random() * randomPropValue.length);
-let randomValueValue = randomPropValue[randomValueNumber];
+let randompropValue = words[randomPropName];
+let randomvValueNumber = Math.floor(Math.random() * randompropValue.length);
+let randomValueValue = randompropValue[randomvValueNumber];
 
-// Set Category Info
 document.querySelector(".game-info .category span").innerHTML = randomPropName;
-
-// Select Letters  Guess Element
 let lettersGuessContainer = document.querySelector(".letters-guess");
-
-// Convert Chosen Word To Array
 let lettersAndSpace = Array.from(randomValueValue);
 
-// Create Spans Depened On Word
 lettersAndSpace.forEach(letter => {
-    // Create Empty Span
     let emptySpan = document.createElement("span");
     if (letter === " ") {
-        // Add Class To The Span
         emptySpan.className = "has-space";
     };
-    // Append Span To The Letters Guess Container
     lettersGuessContainer.appendChild(emptySpan);
 });
 
-// Select Guess Spans
-let guessSpans = document.querySelectorAll(".letters-guess span");
-
-// Set Wrong Attemps
+let guessSpan = document.querySelectorAll(".letters-guess span");
 let wrongAttemps = 0;
+let hangmanDraw = document.querySelector(".hangman-draw");
 
-// Select the Draw Element
-let theDraw = document.querySelector(".hangman-draw");
-
-// Handle Clicking On Letters
-document.addEventListener("click", (e) => {
-    // Set The Chose Status
-    let theStatus = false;
+// Handel Clicking On Letters
+document.addEventListener('click', (e) => {
+    let status = false;
     if (e.target.className === "letter-box") {
         e.target.classList.add("clicked");
-        // Get Clicked Letter
         let theClickedLetter = e.target.innerHTML.toLowerCase();
-        // The Chosen Word
         let theChosenWord = Array.from(randomValueValue.toLowerCase());
-        theChosenWord.forEach((wordLetter, Wordindex) => {
-            // If The Clicked Letter Equal To One Of The Chosen Word Letter 
+        console.log(theChosenWord);
+        theChosenWord.forEach((wordLetter, WordIndex) => {
             if (theClickedLetter == wordLetter) {
-                // Set Status To Correct
-                theStatus = true;
-                // Loop On All Guess Spans
-                guessSpans.forEach((span, spanindex) => {
-                    if (Wordindex === spanindex) {
-                        span.innerHTML = theClickedLetter
-                    }
+                status = true;
+                guessSpan.forEach((span, spanIndex) => {
+                    if (WordIndex === spanIndex) {
+                        span.innerHTML = theClickedLetter;
+                    };
                 });
             };
         });
         // If Letter Is Wrong
-        if (theStatus !== true) {
-            // Increase The Wrong Attempts
+        if (status !== true) {
             wrongAttemps++;
-            // Add Class Wrong  On The Draw Element
-            theDraw.classList.add(`wrong-${wrongAttemps}`);
-            // Play Fail Sound
+            hangmanDraw.classList.add(`wrong-${wrongAttemps}`);
             document.getElementById("fail").play();
             if (wrongAttemps === 8) {
                 endGame();
                 lettersContainer.classList.add("finished");
-            }
+            };
         } else {
-            // Play success Sound
             document.getElementById("success").play();
         };
     };
@@ -100,16 +137,17 @@ document.addEventListener("click", (e) => {
 
 // End Game Function
 function endGame() {
-    // Create Popup Div
     let div = document.createElement("div");
-    // Create text
-    let divText = document.createTextNode(`Game Over, The Word Is "${randomValueValue}"`);
-    // Append Text to Div
-    div.appendChild(divText);
-    // Add Class On Div
     div.className = "popup";
-    // Append To The Body
+    let divText = document.createTextNode(`Game Over, The Word Is "${randomValueValue}"`);
+    let btnAgain = document.createElement("button");
+    btnAgain.className = "btn-again";
+    btnAgain.innerHTML = "Play Again";
+    div.appendChild(divText);
+    div.appendChild(btnAgain);
     document.body.appendChild(div);
-    // Play Game Over Sound
     document.getElementById("game-over").play();
+    btnAgain.addEventListener("click", () => {
+        window.location.reload();
+    });
 };
