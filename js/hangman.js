@@ -1,40 +1,61 @@
 var programming_languages = [
     "python",
-    "javascript",
-    "mongodb",
-    "json",
-    "java",
-    "html",
-    "css",
-    "c",
-    "csharp",
-    "golang",
-    "kotlin",
-    "php",
-    "sql",
-    "ruby",
+	"javascript",
+	"mongodb",
+	"json",
+	"java",
+	"html",
+	"css",
+	"c",
+	"csharp",
+	"golang",
+	"kotlin",
+	"php",
+	"sql",
+	"ruby"
 ];
 
 let answer = "";
 let maxWrong = 6;
 let mistakes = 0;
-let gussed = [];
+let guessed = [];
+let wordStatues = null;
 
-function randomWord() {
+function randomLanguage() {
     answer = programming_languages[Math.floor(Math.random() * programming_languages.length)];
 };
+randomLanguage();
 
 function generateButtons() {
-    let buttonsHTML = "abcdefghijklmnopqrstuvwxyz";
-    let buttonsHTMLArray = Array.from(buttonsHTML);
-    buttonsHTMLArray.forEach(letter => {
-        let button = document.createElement("button");
-        let buttonText = document.createTextNode(letter);
-        button.className = "btn btn-lg btn-primary m-2";
-        button.id = letter;
-        button.appendChild(buttonText);
-        document.getElementById("keyboard").appendChild(button);
-    });
+    let buttonHTML = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("").map(letter => 
+            `
+                <button 
+                    class="btn btn-lg btn-primary m-2"
+                    id="` + letter + `"
+                    onClick="handleGuess('` + letter + `')"
+                >
+                    ` + letter + `
+                </button>
+            `
+        ).join("");
+        document.getElementById("keyboard").innerHTML = buttonHTML;
 };
-randomWord();
 generateButtons();
+
+document.getElementById("maxWrong").innerHTML = maxWrong;
+
+function guessedWord() {
+    wordStatues = answer.split("").map(letter => guessed.indexOf(letter) >= 0 ? letter : " _ ").join("");
+    document.getElementById("wordSpotlight").innerHTML = wordStatues;
+};
+guessedWord();
+
+function handleGuess(chosenLetter) {
+    guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
+    document.getElementById(chosenLetter).setAttribute('disabled', true);
+    alert(answer);
+    if (answer.indexOf(chosenLetter) >= 0) {
+        guessedWord();
+    };
+};
+handleGuess();
