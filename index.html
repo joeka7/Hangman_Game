@@ -15,12 +15,16 @@
         <div class="float-right">Wrong Guesses: <span id="mistakes">0</span> of <span id="maxWrong"></span></div>
         <div class="text-center">
             <img id="hangmanPic" src="imgs/0.jpg" alt="">
-            <p>Guess The Programming Language</p>
+            <p>Guess The Programming Language:</p>
             <p id="wordSpotlight">The word to be guessed goes here</p>
             <div id="keyboard"></div>
             <button class="btn btn-info" onclick="reset()">Reset</button>
         </div>
     </div>
+    <audio src="audio/success-1-6297.mp3" id="success" preload="auto"></audio>
+    <audio src="audio/negative_beeps-6008.mp3" id="wrong" preload="auto"></audio>
+    <audio src="audio/success-fanfare-trumpets-6185.mp3" id="winGame" preload="auto"></audio>
+    <audio src="audio/game-over-arcade-6435.mp3" id="lostGame" preload="auto"></audio>
     <script src="js/hangman.js"></script>
 </body>
 </html>
