@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% );   
+}
+.container {
+    text-align: center;
+}
+.container .title {
+    width: 350px;
+    color: white;
+    font-size: 45px;
+    font-weight: 100;
+    text-transform: uppercase;
+    border-bottom: 1px solid white;
+    padding-bottom: 25px;
+    letter-spacing: 3px;
+    margin: 30px auto;
+}
+.container .wrong {
+    color: white;
+}
+.container #hangmanPic {
+    margin-left: 50px;
+}
+.container p {
+    color: white;
+}
+.container #keyboard {
+    width: 50%;
+    margin: auto;
+}
+@media (max-width: 992px) {
+    .container #keyboard {
+        width: 100%;
+    }
+}
+.container #keyboard button {
+    width: 70px;
+    margin: 3px;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-info {
+    padding: 10px 45px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
